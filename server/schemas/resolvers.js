@@ -32,6 +32,20 @@ const resolvers = {
             const token = signToken(user);
             return {token, user};
         },
+        saveBook: async (parent, args, context) => {
+            if(context.user) {
+                const addSave = await User.findOneAndUpdate(
+                    {_id: context.user._id},
+                    { $push: { savedBooks: book.input } },
+                    { new: true }
+                );
+                return addSave;
+            }
+            throw new AuthenticationError('Must be logged in to save a book')
+        },
+        deleteBook: async () => {
+
+        }
     },
 };
 
