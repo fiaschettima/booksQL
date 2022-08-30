@@ -36,15 +36,23 @@ const resolvers = {
             if(context.user) {
                 const addSave = await User.findOneAndUpdate(
                     {_id: context.user._id},
-                    { $push: { savedBooks: book.input } },
+                    { $push: { savedBooks: args.input } },
                     { new: true }
                 );
                 return addSave;
             }
             throw new AuthenticationError('Must be logged in to save a book')
         },
-        deleteBook: async () => {
-
+        deleteBook: async (parent, args, context) => {
+            if(context.user){
+                const userInfo = await User.findOneAndUpdate(
+                    {_id: context.user._id},
+                    {$pull: {savedBooks: {bookId: args.bookId}}},
+                    {new: true}
+                )
+                return userInfo;
+            }
+            throw new AuthenticationError("Must be logged in to perform this action!")
         }
     },
 };
