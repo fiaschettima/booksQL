@@ -23,8 +23,14 @@ const resolvers = {
             const user = User.findOne({email});
 
             if(!user){
-                
+                throw new AuthenticationError('No account with this email found')
             }
+            const checkPass = await user.isCorrectPassword(password);
+            if(!checkPass){
+                throw new AuthenticationError('Password Incorrect!')
+            }
+            const token = signToken(user);
+            return {token, user};
         },
     },
 };
