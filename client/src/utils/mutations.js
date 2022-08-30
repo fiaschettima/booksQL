@@ -14,7 +14,7 @@ export const NEW_USER = gql `
                     authors
                     description
                     title
-                    link
+                    Link
                     image
                 }
             }

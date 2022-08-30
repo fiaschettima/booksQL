@@ -27,15 +27,16 @@ const SignupForm = () => {
       event.preventDefault();
       event.stopPropagation();
     }
-
+    console.log(userFormData)
     try {
       const { data } = await newUser(
         {variables: {...userFormData}}
       )
-
+    
     Auth.login(data.newUser.token);
     } catch (err) {
       console.error(err);
+    
       setShowAlert(true);
     }
 
