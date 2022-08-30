@@ -13,7 +13,20 @@ const resolvers = {
             throw new AuthenticationError('Please Log in');
         }
     },
-    Mutation:{},
+    Mutation:{
+        newUser: async (parent, {username,email,password}) =>{
+            const user = await User.create({username, email, password});
+            const token = signToken(user);
+            return { user, token};
+        },
+        login: async(parent, {email,password}) => {
+            const user = User.findOne({email});
+
+            if(!user){
+                
+            }
+        },
+    },
 };
 
 module.exports = resolvers;
