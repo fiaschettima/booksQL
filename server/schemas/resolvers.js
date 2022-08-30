@@ -6,9 +6,9 @@ const resolvers = {
     Query : {
         singleUser : async(parent, args, context) =>{
             if(context.user){
-                return User.findOne({
-                    _id: context.user._id,
-                });
+                return User.findOne(
+                    {_id: context.user._id}
+            );
             }
             throw new AuthenticationError('Please Log in');
         }
@@ -20,12 +20,13 @@ const resolvers = {
             return { user, token};
         },
         login: async(parent, {email,password}) => {
-            const user = User.findOne({email});
+            const user = await User.findOne({email});
 
             if(!user){
                 throw new AuthenticationError('No account with this email found')
-            }
+            };
             const checkPass = await user.isCorrectPassword(password);
+
             if(!checkPass){
                 throw new AuthenticationError('Password Incorrect!')
             }
