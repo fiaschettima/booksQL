@@ -9,7 +9,7 @@ export const NEW_USER = gql `
                 email
                 bookCount
                 savedBooks {
-                    _id
+                  
                     bookId
                     authors
                     description
@@ -42,7 +42,7 @@ export const SAVE_BOOK = gql`
             email
             bookCount
             savedBooks{
-                _id
+       
                 authors
                 description
                 bookId
@@ -62,7 +62,7 @@ export const DELETE_BOOK = gql`
             email
             bookCount
             savedBooks{
-                _id
+        
                 authors
                 description
                 bookId
